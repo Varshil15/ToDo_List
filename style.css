@@ -1,0 +1,341 @@
+body {
+  margin: 0;
+  background: #000;
+  font-family: 'Segoe UI', sans-serif;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  min-height: 100vh;
+  animation: fadeInPage 1.5s ease-out forwards;
+}
+@keyframes fadeInPage {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.container {
+  width: 500px;
+  background: #111;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 12px 24px rgba(255,255,255,0.2);
+  position: relative;
+  animation: popInContainer 0.8s ease-out;
+}
+@keyframes popInContainer {
+  0% { opacity: 0; transform: scale(0.9); }
+  70% { opacity: 1; transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+.container::after {
+  content: none;
+}
+
+.headercard {
+  background: #222;
+  padding: 40px;
+  border-radius: 15px 15px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 0 12px rgba(255,255,255,0.2);
+  margin-bottom: 20px;
+  animation: slideDown 0.8s ease-out;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.headercard h2 {
+  margin: 0;
+  font-size: 32px;
+  color: #fff;
+  transition: transform 0.3s ease;
+}
+.headercard h2:hover {
+  animation: pulse 1s infinite alternate;
+}
+@keyframes pulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
+}
+.headercard:hover {
+  transform: scale(1.02) rotate(0.5deg);
+  box-shadow: 0 0 20px rgba(255,255,255,0.3);
+}
+
+.probar {
+  width: 100%;
+  height: 10px;
+  background: #333;
+  border-radius: 5px;
+  margin-top: 10px;
+  overflow: hidden;
+  animation: fadeInBar 0.8s ease-out;
+}
+@keyframes fadeInBar {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.profill {
+  height: 100%;
+  width: 0%;
+  background: #fff;
+  transition: width 0.3s ease;
+}
+
+.tskcont {
+  background: #fff;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 20px;
+  color: #000;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  animation: popInCounter 0.8s ease-out;
+}
+@keyframes popInCounter {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.tskcont:hover {
+  animation: perfectCountPulse 1s ease-out;
+}
+@keyframes perfectCountPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  }
+  50% {
+    transform: scale(1.15);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  }
+}
+
+.inputsection {
+  margin: 20px 0;
+  display: flex;
+  position: relative;
+  overflow: visible;
+  animation: fadeInInputs 0.8s ease-out;
+}
+@keyframes fadeInInputs {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.inputsection input {
+  flex: 1;
+  padding: 20px 25px;
+  font-size: 20px;
+  color: #fff;
+  background: #000;
+  border: 2px solid #fff;
+  border-right: none;
+  border-radius: 25px 0 0 25px;
+  outline: none;
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 8px rgba(255,255,255,0.1);
+}
+.inputsection input:focus {
+  box-shadow: 0 0 15px rgba(255,255,255,0.5);
+  transform: scale(1.02) rotate(0.5deg);
+  animation: searchFocusGlow 0.6s ease-out;
+}
+@keyframes searchFocusGlow {
+  0% { box-shadow: 0 0 0px rgba(255,255,255,0); }
+  50% { box-shadow: 0 0 15px rgba(255,255,255,0.7); }
+  100% { box-shadow: 0 0 5px rgba(255,255,255,0.5); }
+}
+.inputsection input::placeholder {
+  color: #ccc;
+}
+.inputsection button {
+  width: 60px;
+  background: #fff;
+  border: none;
+  border-radius: 0 25px 25px 0;
+  color: #000;
+  font-size: 24px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.1s;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+.inputsection button:hover {
+  background: #ddd;
+  box-shadow: 0 6px 10px rgba(0,0,0,0.3);
+}
+.inputsection button:active {
+  transform: scale(0.95);
+  box-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+
+.tasklist {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  list-style: none;
+  margin-top: 20px;
+  padding: 0;
+  animation: fadeInTaskList 0.8s ease-out;
+}
+@keyframes fadeInTaskList {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.taskitem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #222;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(255,255,255,0.1);
+  justify-content: space-between;
+  transition: transform 0.1s, box-shadow 0.3s;
+  animation: slideIn 0.5s ease-out;
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.taskitem:hover {
+  background: #333;
+  box-shadow: 0 0 20px rgba(255,255,255,0.3);
+  transform: translateY(-5px) scale(1.02) rotate(0.5deg);
+  animation: hoverGlow 0.5s forwards;
+}
+@keyframes hoverGlow {
+  from { box-shadow: 0 12px 24px rgba(255,255,255,0.2); }
+  to { box-shadow: 0 0 20px rgba(255,255,255,0.3); }
+}
+.taskitem:active {
+  transform: scale(0.98);
+}
+@keyframes popIn {
+  0% { opacity: 0; transform: scale(0.8); }
+  70% { opacity: 1; transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+.taskitem.new {
+  animation: popIn 0.5s ease-out;
+}
+
+.tasktext {
+  flex: 1;
+  font-size: 20px;
+  color: #fff;
+  animation: textFadeIn 0.6s;
+}
+@keyframes textFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.tasktext.completed {
+  text-decoration: line-through;
+  color: #bbb;
+  transition: all 0.3s ease;
+}
+
+.icons {
+  display: flex;
+  gap: 10px;
+  animation: fadeInIcons 0.8s ease-out;
+}
+@keyframes fadeInIcons {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+.icons img {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+.icons img:hover {
+  transform: rotate(10deg) translateY(-5px) scale(1.1);
+}
+.icons img:active {
+  transform: scale(0.95);
+}
+
+.taskitem.completed {
+  box-shadow: 0 0 8px rgba(255,255,255,0.3);
+  animation: completeGlow 0.5s forwards;
+}
+@keyframes completeGlow {
+  from { transform: scale(1); }
+  to { transform: scale(1.02); }
+}
+
+.celebrate {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  background: url('celebration.gif') center/cover no-repeat;
+  pointer-events: none;
+  animation: fadeOutCelebration 2s forwards;
+}
+@keyframes fadeOutCelebration {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(1.2); }
+}
+
+.maincard {
+  transition: transform 0.3s, box-shadow 0.3s;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  animation: floating 8s ease-in-out infinite;
+  box-shadow: 0 12px 24px rgba(0,0,0,0.8);
+}
+@keyframes floating {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
+
+.taskitem input[type="checkbox"] {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  transform: scale(1.1);
+  margin-right: 15px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.taskitem input[type="checkbox"]:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 8px rgba(255,255,255,0.5);
+}
+
+.probar:hover {
+  animation: progressGlow 1s ease-out;
+}
+@keyframes progressGlow {
+  0% { transform: scale(1); box-shadow: 0 0 0px rgba(255,255,255,0); }
+  50% { transform: scale(1.03); box-shadow: 0 0 10px rgba(255,255,255,0.5); }
+  100% { transform: scale(1); box-shadow: 0 0 0px rgba(255,255,255,0); }
+}
+
+.tskcont:hover {
+  animation: countPulse 1s ease-out;
+}
+@keyframes countPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}

@@ -1,0 +1,109 @@
+document.addEventListener("DOMContentLoaded", function () {
+    const storedTasks = localStorage.getItem("tasks");
+    if (storedTasks) {
+        tasks = JSON.parse(storedTasks);
+        updateTaskList();
+        updatestates();
+    }
+});
+
+let tasks = [];
+
+const saveTasks = () => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+const addtask = () => {
+    const taskInput = document.getElementById("taskinput");
+    const text = taskInput.value.trim();
+    if (text) {
+        // Set a flag to indicate this task is new
+        tasks.push({ text: text, completed: false, isNew: true });
+        taskInput.value = "";
+    }
+    updateTaskList();
+    updatestates();
+    saveTasks();
+};
+
+const ToggleTaskComplete = (index) => {
+    const wasIncomplete = !tasks[index].completed;
+    tasks[index].completed = !tasks[index].completed;
+    
+    updateTaskList();
+    updatestates();
+    saveTasks();
+
+    if (wasIncomplete && tasks[index].completed) {
+        setTimeout(() => {
+            const listItem = document.getElementById(`task-${index}`);
+            if (listItem) {
+                const taskItem = listItem.querySelector('.taskitem');
+                const celebration = document.createElement('div');
+                celebration.className = 'celebrate';
+                taskItem.appendChild(celebration);
+                setTimeout(() => {
+                    celebration.remove();
+                }, 2000);
+            }
+        }, 50);
+    }
+};
+const deleteTask = (index) => {
+    tasks.splice(index, 1);
+    updateTaskList();
+    updatestates();
+    saveTasks();
+};
+const editTask = (index) => {
+    const taskInput = document.getElementById("taskinput");
+    taskInput.value = tasks[index].text;
+    deleteTask(index);
+    updatestates();
+    saveTasks();
+};
+
+const updatestates = () => {   
+    const completedTasks = tasks.filter(task => task.completed).length;
+    const totalTasks = tasks.length;
+    const progress = completedTasks / totalTasks * 100;
+    const progressBar = document.getElementById("profill");
+    progressBar.style.width = `${progress}%`;
+
+    document.getElementById("tskcont").innerText = `${completedTasks} / ${totalTasks}`;
+}
+
+
+const updateTaskList = () => {
+    const taskList = document.getElementById("tasklist");
+    taskList.innerHTML = "";
+
+    const sortedTasks = tasks.slice().sort((a, b) => a.completed - b.completed);
+
+    sortedTasks.forEach(task => {
+        const index = tasks.indexOf(task);
+        const listItemId = `task-${index}`;
+        const newClass = task.isNew ? " new" : "";
+        const completeClass = task.completed ? " completed" : "";
+
+        const listitem = document.createElement("li");
+        listitem.id = listItemId; 
+        listitem.innerHTML = `
+            <div class="taskitem${newClass}${completeClass}">
+                <input type="checkbox" class="checkbox" ${task.completed ? "checked" : ""} onchange="ToggleTaskComplete(${index})">
+                <p class="tasktext ${task.completed ? "completed" : ""}">${task.text}</p>
+                <div class="icons">
+                    <img src="edit.png" alt="edit" class="edit" onclick="editTask(${index})">
+                    <img src="delete.png" alt="delete" class="delete" onclick="deleteTask(${index})">
+                </div>
+            </div>
+        `;
+        taskList.appendChild(listitem);
+
+        if (task.isNew) task.isNew = false;
+    });
+};
+
+document.getElementById("addtaskbtn").addEventListener("click", function (e) {
+    e.preventDefault();
+    addtask();
+});
