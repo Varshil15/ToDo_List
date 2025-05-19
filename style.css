@@ -339,7 +339,6 @@ body {
   50% { transform: scale(1.1); }
   100% { transform: scale(1); }
 }
-
 .watermark {
   position: fixed;
   bottom: 20px;
@@ -352,6 +351,10 @@ body {
   transition: color 0.2s, opacity 0.2s;
 }
 
+.watermark:hover {
+    color: #7d56f3;
+    opacity: 0.7;
+}
 .watermark:hover {
     color: #7d56f3;
     opacity: 0.7;
