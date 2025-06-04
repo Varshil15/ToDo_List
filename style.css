@@ -88,9 +88,9 @@ body {
 }
 
 .tskcont {
-  background: #fff;
   width: 60px;
   height: 60px;
+  background: #fff;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -370,6 +370,73 @@ body {
 }
 .clearallbtn:hover {
   background: #cc0000;
+}
+
+@media (max-width: 600px) {
+  .container {
+    width: 98vw;
+    min-width: 0;
+    padding: 10px;
+    border-radius: 10px;
+  }
+  .headercard {
+    flex-direction: column;
+    padding: 20px 10px;
+    gap: 10px;
+    border-radius: 10px 10px 0 0;
+  }
+  .headercard h2 {
+    font-size: 1.5rem;
+  }
+  .tskcont {
+    width: 45px;
+    height: 45px;
+    font-size: 1rem;
+  }
+  .inputsection {
+    flex-direction: column;
+    gap: 10px;
+    margin: 15px 0;
+  }
+  .inputsection input,
+  .inputsection button {
+    border-radius: 25px;
+    font-size: 1rem;
+    padding: 14px 12px;
+  }
+  .inputsection input {
+    border-radius: 25px;
+    border-right: 2px solid #fff;
+    margin-bottom: 8px;
+  }
+  .inputsection button {
+    width: 100%;
+    border-radius: 25px;
+  }
+  .clearallbtn {
+    width: 100%;
+    font-size: 1rem;
+    padding: 10px 0;
+  }
+  .taskitem {
+    flex-direction: column;
+    padding: 12px;
+    font-size: 1rem;
+    gap: 8px;
+  }
+  .tasktext {
+    font-size: 1rem;
+    word-break: break-word;
+  }
+  .icons img {
+    width: 20px;
+    height: 20px;
+  }
+  .watermark {
+    font-size: 1rem;
+    right: 10px;
+    bottom: 10px;
+  }
 }
 
 
