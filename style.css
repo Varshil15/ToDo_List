@@ -409,7 +409,7 @@ body {
   }
   .inputsection input {
     border-radius: 25px;
-    border-right: 2px solid #fff;
+    border: 2px solid #fff;    /* Show all borders */
     margin-bottom: 8px;
   }
   .inputsection button {
