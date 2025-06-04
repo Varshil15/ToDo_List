@@ -198,6 +198,8 @@ body {
   position: relative;
   display: flex;
   align-items: center;
+  flex-direction: row;      /* Always row */
+  flex-wrap: nowrap;        /* Prevent wrapping */
   background: #222;
   padding: 20px;
   border-radius: 10px;
@@ -205,6 +207,7 @@ body {
   justify-content: space-between;
   transition: transform 0.1s, box-shadow 0.3s;
   animation: slideIn 0.5s ease-out;
+  gap: 12px;                /* Add some gap between items */
 }
 @keyframes slideIn {
   from { opacity: 0; transform: translateX(-20px); }
@@ -423,6 +426,13 @@ body {
     padding: 12px;
     font-size: 1rem;
     gap: 8px;
+  }
+  .taskitem {
+    flex-direction: row !important;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    font-size: 1rem;
   }
   .tasktext {
     font-size: 1rem;
