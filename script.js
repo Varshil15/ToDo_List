@@ -107,3 +107,9 @@ document.getElementById("addtaskbtn").addEventListener("click", function (e) {
     e.preventDefault();
     addtask();
 });
+
+document.getElementById('taskinput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    document.getElementById('addtaskbtn').click();
+  }
+});
