@@ -115,8 +115,10 @@ document.getElementById('taskinput').addEventListener('keydown', function(e) {
 });
 
 document.getElementById('clearallbtn').addEventListener('click', function() {
-    tasks = [];
-    updateTaskList();
-    updatestates();
-    saveTasks();
+    if (confirm('Are you sure you want to clear all tasks?')) {
+        tasks = [];
+        updateTaskList();
+        updatestates();
+        saveTasks();
+    }
 });
