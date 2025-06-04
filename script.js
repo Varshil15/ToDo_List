@@ -113,3 +113,10 @@ document.getElementById('taskinput').addEventListener('keydown', function(e) {
     document.getElementById('addtaskbtn').click();
   }
 });
+
+document.getElementById('clearallbtn').addEventListener('click', function() {
+    tasks = [];
+    updateTaskList();
+    updatestates();
+    saveTasks();
+});
