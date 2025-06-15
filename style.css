@@ -2,7 +2,7 @@ body {
   margin: 0;
   background: #000;
   font-family: 'Segoe UI', sans-serif;
-  color: #fff;
+  color: #FFF7E6; /* cream shade */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -52,7 +52,7 @@ body {
 .headercard h2 {
   margin: 0;
   font-size: 32px;
-  color: #fff;
+  color: #FFF7E6;
   transition: transform 0.3s ease;
 }
 .headercard h2:hover {
@@ -97,7 +97,7 @@ body {
   justify-content: center;
   font-weight: bold;
   font-size: 20px;
-  color: #000;
+  color: #725CAD;
   box-shadow: 0 4px 8px rgba(114,92,173,0.22); /* purple shadow */
   animation: popInCounter 0.8s ease-out;
 }
@@ -139,7 +139,7 @@ body {
   flex: 1;
   padding: 20px 25px;
   font-size: 20px;
-  color: #fff;
+  color: #FFF7E6;
   background: #000;
   border: 2px solid #fff;
   border-right: none;
@@ -166,7 +166,7 @@ body {
   background: #fff;
   border: none;
   border-radius: 0 25px 25px 0;
-  color: #000;
+  color: #725CAD;
   font-size: 24px;
   cursor: pointer;
   transition: background 0.3s, transform 0.1s;
@@ -239,7 +239,7 @@ body {
 .tasktext {
   flex: 1;
   font-size: 20px;
-  color: #fff;
+  color: #FFF7E6;
   animation: textFadeIn 0.6s;
 }
 @keyframes textFadeIn {
@@ -348,7 +348,7 @@ body {
   bottom: 20px;
   right: 20px;
   font-size: 1.4rem;
-  color: #ffffff;
+  color: #FFF7E6;
   user-select: none;
   z-index: 1;
   pointer-events: none;
