@@ -63,7 +63,7 @@ body {
   to { transform: scale(1.05); }
 }
 .headercard:hover {
-  transform: scale(1.02) rotate(0.5deg);
+  transform: scale(1.02) ;
   box-shadow: 0 0 20px rgba(114,92,173,0.28); /* purple shadow */
 }
 
