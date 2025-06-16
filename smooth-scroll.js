@@ -1,14 +1,12 @@
 (function () {
     var defaultOptions = {
-
-        // frameRate: 120,
         animationTime: 1500,
         stepSize: 100,
         pulseAlgorithm: true,
         pulseScale: 4,
         pulseNormalize: 1,
-        accelerationDelta: 1,  // 50
-        accelerationMax: 3,   // 3
+        accelerationDelta: 1,
+        accelerationMax: 3,
         keyboardSupport: true,
         arrowScroll: 200,
         fixedBackground: true,
@@ -41,20 +39,14 @@
     }
 
     function init() {
-
         if (initDone || !document.body) return;
-
         initDone = true;
-
         var body = document.body;
         var html = document.documentElement;
         var windowHeight = window.innerHeight;
         var scrollHeight = body.scrollHeight;
-
-        // check compat mode for root element
         root = (document.compatMode.indexOf('CSS') >= 0) ? html : body;
         activeElement = body;
-
         initTest();
         if (top != self) {
             isFrame = true;
@@ -63,13 +55,11 @@
             scrollHeight > windowHeight &&
             (body.offsetHeight <= windowHeight ||
                 html.offsetHeight <= windowHeight)) {
-
             var fullPageElem = document.createElement('div');
             fullPageElem.style.cssText = 'position:absolute; z-index:-10000; ' +
                 'top:0; left:0; right:0; height:' +
                 root.scrollHeight + 'px';
             document.body.appendChild(fullPageElem);
-
             var pendingRefresh;
             refreshSize = function () {
                 if (pendingRefresh) return;
@@ -80,21 +70,15 @@
                     pendingRefresh = null;
                 }, 500);
             };
-
             setTimeout(refreshSize, 10);
-
             addEvent('resize', refreshSize);
-
             var config = {
                 attributes: true,
                 childList: true,
                 characterData: false
-                // subtree: true
             };
-
             observer = new MutationObserver(refreshSize);
             observer.observe(body, config);
-
             if (root.offsetHeight <= windowHeight) {
                 var clearfix = document.createElement('div');
                 clearfix.style.clear = 'both';
@@ -116,15 +100,12 @@
         removeEvent('load', init);
     }
 
-
     var que = [];
     var pending = false;
     var lastScroll = Date.now();
 
     function scrollArray(elem, left, top) {
-
         directionCheck(left, top);
-
         if (options.accelerationMax != 1) {
             var now = Date.now();
             var elapsed = now - lastScroll;
@@ -138,7 +119,6 @@
             }
             lastScroll = Date.now();
         }
-
         que.push({
             x: left,
             y: top,
@@ -146,51 +126,37 @@
             lastY: (top < 0) ? 0.99 : -0.99,
             start: Date.now()
         });
-
         if (pending) {
             return;
         }
-
         var scrollRoot = getScrollRoot();
         var isWindowScroll = (elem === scrollRoot || elem === document.body);
-
         if (elem.$scrollBehavior == null && isScrollBehaviorSmooth(elem)) {
             elem.$scrollBehavior = elem.style.scrollBehavior;
             elem.style.scrollBehavior = 'auto';
         }
-
         var step = function (time) {
-
             var now = Date.now();
             var scrollX = 0;
             var scrollY = 0;
-
             for (var i = 0; i < que.length; i++) {
-
                 var item = que[i];
                 var elapsed = now - item.start;
                 var finished = (elapsed >= options.animationTime);
-
                 var position = (finished) ? 1 : elapsed / options.animationTime;
-
                 if (options.pulseAlgorithm) {
                     position = pulse(position);
                 }
-
                 var x = (item.x * position - item.lastX) >> 0;
                 var y = (item.y * position - item.lastY) >> 0;
-
                 scrollX += x;
                 scrollY += y;
-
                 item.lastX += x;
                 item.lastY += y;
-
                 if (finished) {
                     que.splice(i, 1); i--;
                 }
             }
-
             if (isWindowScroll) {
                 window.scrollBy(scrollX, scrollY);
             }
@@ -198,11 +164,9 @@
                 if (scrollX) elem.scrollLeft += scrollX;
                 if (scrollY) elem.scrollTop += scrollY;
             }
-
             if (!left && !top) {
                 que = [];
             }
-
             if (que.length) {
                 requestFrame(step, elem, (1000 / options.frameRate + 1));
             } else {
@@ -213,39 +177,26 @@
                 }
             }
         };
-
-        // start a new queue of actions
         requestFrame(step, elem, 0);
         pending = true;
     }
 
-
-    /**
-     * Mouse wheel handler.
-     * @param {Object} event
-     */
     function wheel(event) {
-
         if (!initDone) {
             init();
         }
-
         var target = event.target;
-
         if (event.defaultPrevented || event.ctrlKey) {
             return true;
         }
-
         if (isNodeName(activeElement, 'embed') ||
             (isNodeName(target, 'embed') && /\.pdf/i.test(target.src)) ||
             isNodeName(activeElement, 'object') ||
             target.shadowRoot) {
             return true;
         }
-
         var deltaX = -event.wheelDeltaX || event.deltaX || 0;
         var deltaY = -event.wheelDeltaY || event.deltaY || 0;
-
         if (isMac) {
             if (event.wheelDeltaX && isDivisible(event.wheelDeltaX, 120)) {
                 deltaX = -120 * (event.wheelDeltaX / Math.abs(event.wheelDeltaX));
@@ -254,18 +205,14 @@
                 deltaY = -120 * (event.wheelDeltaY / Math.abs(event.wheelDeltaY));
             }
         }
-
         if (!deltaX && !deltaY) {
             deltaY = -event.wheelDelta || 0;
         }
-
         if (event.deltaMode === 1) {
             deltaX *= 40;
             deltaY *= 40;
         }
-
         var overflowing = overflowingAncestor(target);
-
         if (!overflowing) {
             if (isFrame && isChrome) {
                 Object.defineProperty(event, "target", { value: window.frameElement });
@@ -273,37 +220,27 @@
             }
             return true;
         }
-
         if (isTouchpad(deltaY)) {
             return true;
         }
-
         if (Math.abs(deltaX) > 1.2) {
             deltaX *= options.stepSize / 120;
         }
         if (Math.abs(deltaY) > 1.2) {
             deltaY *= options.stepSize / 120;
         }
-
         scrollArray(overflowing, deltaX, deltaY);
         event.preventDefault();
         scheduleClearCache();
     }
 
-    /**
-     * Keydown event handler.
-     * @param {Object} event
-     */
     function keydown(event) {
-
         var target = event.target;
         var modifier = event.ctrlKey || event.altKey || event.metaKey ||
             (event.shiftKey && event.keyCode !== key.spacebar);
-
         if (!document.body.contains(activeElement)) {
             activeElement = document.activeElement;
         }
-
         var inputNodeNames = /^(textarea|select|embed|object)$/i;
         var buttonTypes = /^(button|submit|radio|checkbox|file|color|image)$/i;
         if (event.defaultPrevented ||
@@ -315,31 +252,24 @@
             modifier) {
             return true;
         }
-
         if ((isNodeName(target, 'button') ||
             isNodeName(target, 'input') && buttonTypes.test(target.type)) &&
             event.keyCode === key.spacebar) {
             return true;
         }
-
         if (isNodeName(target, 'input') && target.type == 'radio' &&
             arrowKeys[event.keyCode]) {
             return true;
         }
-
         var shift, x = 0, y = 0;
         var overflowing = overflowingAncestor(activeElement);
-
         if (!overflowing) {
             return (isFrame && isChrome) ? parent.keydown(event) : true;
         }
-
         var clientHeight = overflowing.clientHeight;
-
         if (overflowing == document.body) {
             clientHeight = window.innerHeight;
         }
-
         switch (event.keyCode) {
             case key.up:
                 y = -options.arrowScroll;
@@ -347,7 +277,7 @@
             case key.down:
                 y = options.arrowScroll;
                 break;
-            case key.spacebar: // (+ shift)
+            case key.spacebar:
                 shift = event.shiftKey ? 1 : -1;
                 y = -shift * clientHeight * 0.9;
                 break;
@@ -376,7 +306,6 @@
             default:
                 return true;
         }
-
         scrollArray(overflowing, x, y);
         event.preventDefault();
         scheduleClearCache();
@@ -385,7 +314,6 @@
     function mousedown(event) {
         activeElement = event.target;
     }
-
 
     var uniqueID = (function () {
         var i = 0;
@@ -398,8 +326,6 @@
     var cacheY = {};
     var clearCacheTimer;
     var smoothBehaviorForElement = {};
-
-
 
     function scheduleClearCache() {
         clearTimeout(clearCacheTimer);
@@ -418,7 +344,6 @@
     function getCache(el, x) {
         return (x ? cacheX : cacheY)[uniqueID(el)];
     }
-
 
     function overflowingAncestor(el) {
         var elems = [];
@@ -465,7 +390,6 @@
         }
         return smoothBehaviorForElement[id];
     }
-
 
     function addEvent(type, fn, arg) {
         window.addEventListener(type, fn, arg || false);
@@ -579,9 +503,7 @@
         if (x < 1) {
             val = x - (1 - Math.exp(-x));
         } else {
-
             start = Math.exp(-1);
-
             x -= 1;
             expx = 1 - Math.exp(-x);
             val = start + (expx * (1 - start));
@@ -592,14 +514,11 @@
     function pulse(x) {
         if (x >= 1) return 1;
         if (x <= 0) return 0;
-
         if (options.pulseNormalize == 1) {
             options.pulseNormalize /= pulse_(1);
         }
         return pulse_(x);
     }
-
-
 
     var userAgent = window.navigator.userAgent;
     var isEdge = /Edge/.test(userAgent);
@@ -609,7 +528,6 @@
     var isIEWin7 = /Windows NT 6.1/i.test(userAgent) && /rv:11/i.test(userAgent);
     var isOldSafari = isSafari && (/Version\/8/i.test(userAgent) || /Version\/9/i.test(userAgent));
     var isEnabledForBrowser = (isChrome || isSafari || isIEWin7) && !isMobile;
-
     var supportsPassive = false;
     try {
         window.addEventListener("test", null, Object.defineProperty({}, 'passive', {
@@ -618,26 +536,21 @@
             }
         }));
     } catch (e) { }
-
     var wheelOpt = supportsPassive ? { passive: false } : false;
     var wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
-
     if (wheelEvent && isEnabledForBrowser) {
         addEvent(wheelEvent, wheel, wheelOpt);
         addEvent('mousedown', mousedown);
         addEvent('load', init);
     }
-
     function SmoothScroll(optionsToSet) {
         for (var key in optionsToSet)
             if (defaultOptions.hasOwnProperty(key))
                 options[key] = optionsToSet[key];
     }
     SmoothScroll.destroy = cleanup;
-
     if (window.SmoothScrollOptions)
         SmoothScroll(window.SmoothScrollOptions);
-
     if (typeof define === 'function' && define.amd)
         define(function () {
             return SmoothScroll;
@@ -646,5 +559,4 @@
         module.exports = SmoothScroll;
     else
         window.SmoothScroll = SmoothScroll;
-
 })();
