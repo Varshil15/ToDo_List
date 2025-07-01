@@ -51,6 +51,7 @@ const updatestates = () => {
     const completedTasks = tasks.filter(task => task.completed).length;
     const totalTasks = tasks.length;
     const progress = completedTasks / totalTasks * 100;
+    
     const progressBar = document.getElementById("profill");
     progressBar.style.width = `${progress}%`;
 
