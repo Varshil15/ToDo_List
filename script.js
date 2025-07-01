@@ -70,6 +70,14 @@ const updatestates = () => {
     progressBar.style.width = `${progress}%`;
 
     document.getElementById("tskcont").innerText = `${completedTasks} / ${totalTasks}`;
+    
+    // Update the motivational text based on completion status
+    const motivationText = document.querySelector(".headercard p");
+    if (totalTasks > 0 && completedTasks === totalTasks) {
+        motivationText.textContent = "Well done!";
+    } else {
+        motivationText.textContent = "Keep it up!";
+    }
 }
 
 
