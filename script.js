@@ -32,21 +32,6 @@ const ToggleTaskComplete = (index) => {
     updateTaskList();
     updatestates();
     saveTasks();
-
-    if (wasIncomplete && tasks[index].completed) {
-        setTimeout(() => {
-            const listItem = document.getElementById(`task-${index}`);
-            if (listItem) {
-                const taskItem = listItem.querySelector('.taskitem');
-                const celebration = document.createElement('div');
-                celebration.className = 'celebrate';
-                taskItem.appendChild(celebration);
-                setTimeout(() => {
-                    celebration.remove();
-                }, 2000);
-            }
-        }, 50);
-    }
 };
 const deleteTask = (index) => {
     tasks.splice(index, 1);
@@ -75,6 +60,15 @@ const updatestates = () => {
     const motivationText = document.querySelector(".headercard p");
     if (totalTasks > 0 && completedTasks === totalTasks) {
         motivationText.textContent = "Well done!";
+        
+        // Show celebration on main container when all tasks completed
+        const mainCard = document.querySelector(".maincard");
+        const celebration = document.createElement('div');
+        celebration.className = 'celebrate';
+        mainCard.appendChild(celebration);
+        setTimeout(() => {
+            celebration.remove();
+        }, 2000);
     } else {
         motivationText.textContent = "Keep it up!";
     }
